@@ -32,3 +32,8 @@
 .cast-cards img{
   height: 400px;
 }
+
+.genere-cards li {
+background-color: #e1e0e0 !important;
+cursor: pointer;
+}
