@@ -303,3 +303,29 @@
           background-color: transparent !important;
           color: white;
         }
+
+
+
+        .cast-container {
+  display: flex;
+  flex-wrap: wrap;       /* allow badges to wrap to next line */
+  gap: 8px;              /* spacing between badges */
+  margin: 20px;
+}
+
+.badge {
+  /* background-color: #333; dark background */
+  background-color: #555; /* hover effect */
+  color: #fff;            /* white text */
+  padding: 6px 12px;
+  border-radius: 12px;    /* rounded pill shape */
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-block;
+  transition: background 0.3s;
+  margin: 5px 5px;
+}
+
+.badge:hover {
+  background-color: #555; /* hover effect */
+}

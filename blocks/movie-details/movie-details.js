@@ -203,8 +203,19 @@ async function getMatchingMovieData(url,targetId,block){
             const revenueFormatted = formatCurrency(m.revenue);
             const budgetFormatted = formatCurrency(m.budget);
             const runtimeFormatted = formatRuntime(m.runtime);
-            const mainCast = limitList(m.cast, 6); // Limit cast to first 6 names
+            const mainCast = limitList(m.cast, 12); // Limit cast to first 6 names
             const genres = m.genres.split(',').map(g => g.trim());
+
+
+            // Split into array of names
+            const castArray = mainCast.split(",").map(name => name.trim());
+
+            // Create HTML string of badges
+            const badgesHTML = castArray.map(name => `<span class="badge">${name}</span>`).join("");
+
+            // Insert into body (or any container)
+            // document.body.insertAdjacentHTML("beforeend", `<div class="cast-container">${badgesHTML}</div>`);
+
 
             // Placeholder image URL
             const posterUrl = `https://image.tmdb.org/t/p/w200${m.poster_path}`;
@@ -309,7 +320,7 @@ async function getMatchingMovieData(url,targetId,block){
                             <!-- Cast Column -->
                             <div>
                                 <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--accent);">Top Cast</h3>
-                                <p style="color: var(--text-muted);">${mainCast}</p>
+                                <p style="color: var(--text-muted);">${badgesHTML}</p>
                             </div>
 
                             <!-- Crew Column -->

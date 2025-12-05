@@ -278,8 +278,14 @@ function processJSON(movies){
          * @returns {string} HTML for the card.
          */
         function createMovieCard(movie) {
-            // Note: The details URL is just a placeholder as we don't have a details page in this single file.
-            const detailsUrl = `movie-details-english?id=${movie.id}`;
+            var language=""
+            if (window.location.pathname.indexOf("english")>0){
+                language="english";
+            } else if(window.location.pathname.indexOf("hindi")>0){
+                language="hindi";
+            } 
+
+            const detailsUrl = `movie-details-${language}?id=${movie.id}`;
 
             return `
                 <div class="movie-card">
