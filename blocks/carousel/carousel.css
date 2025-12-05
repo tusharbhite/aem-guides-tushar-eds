@@ -38,7 +38,7 @@
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align='right']) {
   align-items: flex-end;
-}
+}  
 
 .carousel .carousel-slide .carousel-slide-image picture {
   position: absolute;
@@ -151,3 +151,24 @@
     --slide-content-width: auto;
   }
 }
+
+/*Landing page variation 
+.carousel-wrapper .landing-page
+*/
+.landing-page .carousel-slide {
+  width: 50%;
+}
+
+.landing-page .carousel-slide .carousel-slide-image picture > img {
+  height: 100%;
+  width: 20%;
+  object-fit: cover;
+  margin-left: 100px;
+}
+
+.landing-page .carousel-slide {
+  display: flex;              /* enable flexbox */
+  flex-direction: column;     /* stack divs vertically */
+  align-items: flex-end;      /* align both divs to the right */
+}
+
