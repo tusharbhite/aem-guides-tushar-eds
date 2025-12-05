@@ -6,7 +6,8 @@
 .hero {
   position: relative;
   padding: 40px 24px;
-  min-height: 300px;
+  min-height: 500px;
+  /* min-width: 1080px; */
 }
 
 .hero h1 {
