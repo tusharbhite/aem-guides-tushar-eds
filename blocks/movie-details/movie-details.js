@@ -46,45 +46,7 @@ var currentMovieData= await getMatchingMovieData(url,movieID,block);
 console.log("currentMovieData"+currentMovieData); 
 
         const movie = currentMovieData;
-        // // --- Main Execution Block ---
-
-        // // Wait for the DOM to be fully loaded before trying to insert content
-        // // document.addEventListener('DOMContentLoaded', () => {
-        //   // alert("inside dmcld");
-        //     const container = document.querySelector('[data-block-name="movie-details"]');
-
-        //     if (!movie) {
-        //         container.innerHTML = `<div style="padding: 2rem; text-align: center; color: var(--text-muted);">Error: No movie data found in the JSON array.</div>`;
-        //         return;
-        //     }
-
-        //     // Generate the dynamic HTML
-        //     const movieHtml = generateMovieHtml(movie);
-        //     console.log(movieHtml);
-
-        //     // Dynamically insert the generated HTML into the container
-        //     container.innerHTML = movieHtml;
-            
-            
-
-        //     // Run on load and on resize
-        //     handleResize();
-        //     window.addEventListener('resize', handleResize);
-        // // });
-
-
-
-  // load footer as fragment
-  // const footerMeta = getMetadata('footer');
-  // const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  // const fragment = await loadFragment(footerPath);
-
-  // // decorate footer DOM
-  // block.textContent = '';
-  // const footer = document.createElement('div');
-  // while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
-
-  // block.append(footer);
+        
 }
 
 

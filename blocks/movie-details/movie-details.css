@@ -298,3 +298,8 @@
                 padding: 0 2rem; /* Equivalent to lg:px-8 */
             }
         }
+
+        footer{
+          background-color: transparent !important;
+          color: white;
+        }
