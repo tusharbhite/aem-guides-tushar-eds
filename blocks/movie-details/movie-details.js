@@ -203,7 +203,7 @@ async function getMatchingMovieData(url,targetId,block){
             const revenueFormatted = formatCurrency(m.revenue);
             const budgetFormatted = formatCurrency(m.budget);
             const runtimeFormatted = formatRuntime(m.runtime);
-            const mainCast = limitList(m.cast, 12); // Limit cast to first 6 names
+            const mainCast = limitList(m.cast, 20); // Limit cast to first 6 names
             const genres = m.genres.split(',').map(g => g.trim());
 
 
