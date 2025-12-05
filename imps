@@ -1,0 +1,462 @@
+old content source
+https://content.da.live/tusharbhite/aem-guides-tushar-eds/
+
+drive
+https://drive.google.com/drive/folders/1-VJIcjUYewaDqGpi9HrqP3LDMdjOXAoj
+
+Section Can be added using triple hyphen ---- or horizontal line
+
+Block Means RElated to components
+      Added using tables in document
+      can contain any rows and coumns
+      A div for a row and and a child div for each cell generated in html
+      Customize in js code to what to do with each cell
+      
+Metadata 2 ways to add, metadata block at document end or metadata sheet in the source root
+        Metadata block takes preference if duplicate values 
+        But Metadata sheet values gets merged if unique(only in sheet not in metadata)
+        Sheet is available as json on preview
+
+Section Metadata
+        Add metadata block table (2 columns)at end of section (above the --- or horizontal line)
+        Style key values => adds class in the section
+        other than style key=> adds data-key attribute with value of 2nd column cell value
+
+Spreadsheet and JSON Content
+        Sheet is available as json on preview
+        if data.xlsx sheet available in root then
+        json available at https://domain.com/data.json 
+        If single sheet it is default sheet (sheet name does not matters)
+        If multiple sheets then name the sheets as helix-default, helix-sheet1, helix-sheet2 like this
+        https://domain.com/data.json =>helix-default sheet data will be shown
+        https://domain.com/data.json?sheet=sheet1 =>sheet1 data
+        https://domain.com/data.json?sheet=sheet2 =>sheet2 data 
+
+Redirects
+        create sheet named redirects in source root
+        2 columns source and destination
+        Internal example /home  =>  /eds/home
+        External example /about-us  =>  https://domain.com/anout-us
+        If same url used as multiple source URLs => then last one will take effect
+
+Custom http response headers
+        Create headers named sheet in .helix folder
+        3 columns rule, key,  value 
+        rule is path for page can contain wildcard
+        double star is wildcard
+        this sheet is not available in preview/live as json file
+        If multiple header matched in rule then all will be merged and applied to page
+
+COuntry Locale
+        In metadata sheet 
+        url     locale      Language
+        /en/**  en          English
+        /fr/**  fr          French
+
+        <meta name="locale" content ="en">               
+        <meta name="locale" content ="fr">               
+
+Placeholders (Related to i18n)
+        Create sheet named placeholders in site roots ex, /en/placeholders and /fr/placeholders
+        2 columns Key and Text
+
+Sidekick Customization
+        we can add custom actions or action container
+        add plugins in this file
+        /tools/sidekick/config.json
+
+AEM Asset integration
+        We can add a plugin so than on google docs document while authoring we can select aem assets (image) and copy paste in to our document.
+        We can filter, choose folders of aem assets
+
+
+Sidekick library
+        Documentation for blocks , desktop/mobile views, componentn variations supported
+
+Indexing
+        create spreadsheet named query-index in .helix folder of source
+        create sheet raw_index
+        columns page path is mandatory, and  multiple columns possible
+        all clumns must be present in meta tags of page
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - Avatar</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0D0E1F',
+                        'secondary': '#1A2033',
+                        'accent': '#4F46E5', // Indigo
+                        'text-light': '#E5E7EB',
+                        'text-muted': '#9CA3AF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    // Custom background image for the Hero Banner
+                    backgroundImage: theme => ({
+                        'hero-pattern': "url('https://placehold.co/1200x500/101222/FFF?text=Sci-Fi+Hero+Banner+Placeholder')"
+                    })
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for better visual separation and responsiveness */
+        body {
+            background-color: #0D0E1F;
+            color: #E5E7EB;
+            font-family: 'Inter', sans-serif;
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #4F46E5;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container where JavaScript will insert content -->
+    <div id="movie-details-container" class="min-h-screen">
+        <!-- Content will be dynamically inserted here -->
+        <div class="p-8 text-center text-lg text-text-muted">Loading movie data...</div>
+    </div>
+
+    <script>
+        // The provided JSON data structure (wrapped in an object with a 'data' array)
+        const rawJsonData = {
+            "data": [
+                {
+                    "id": "19995",
+                    "title": "Avatar",
+                    "vote_average": "7.594",
+                    "vote_count": "32651",
+                    "status": "Released",
+                    "release_date": "40162",
+                    "year": "2009",
+                    "revenue": "2923706026",
+                    "runtime": "162",
+                    "budget": "237000000",
+                    "imdb_id": "tt0499549",
+                    "original_language": "en",
+                    "original_title": "Avatar",
+                    "overview": "In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.",
+                    "popularity": "25.3853",
+                    "tagline": "Enter the world of Pandora.",
+                    "genres": "Action, Adventure, Fantasy, Science Fiction",
+                    "production_companies": "Dune Entertainment, Lightstorm Entertainment, 20th Century Fox, Ingenious Media",
+                    "production_countries": "United States of America, United Kingdom",
+                    "spoken_languages": "English, Español",
+                    "cast": "Kelson Henderson, Scott Lawrence, Michelle Rodriguez, Tamica Washington-Miller, Laz Alonso, Paul Yates, Cullen B. Madden, Christa Oliver, Kelly Kilgour, Stephen Lang, Jahnel Curfman, Matthew Chamberlain, Lisa Roumain, Lucy Briant, Jon Curry, James Patrick Pitt, Chris Mala, Bravita A. Threatt, CCH Pounder, Dileep Rao, Frankie Torres, Wray Wilson, Rodney Cook, James Gaylyn, Sam Worthington, Nathan Meister, Kyla Warren, Haniyyah Tahirah, Carvon Futrell, Joel David Moore, Matt Gerald, Sara Wilson, Jason Whyte, Sonia Yee, Austin Wilson, Peter Dillon, April Marie Thomas, Jacob Tomuri, Sean Anthony Moran, Joseph Brady Madden, Giovanni Ribisi, Gerry Blair, Melvin Leno Clark III, Michael Blain-Rozgay, Jodie Landau, David Van Horn, Zoe Saldaña, Ilram Choi, Christopher Nolen, Julene Renee, Peter Mensah, Wes Studi, Sean Patrick Murphy, Brandon Jelkes, Dina Morrone, Micah Moch, Luke Hawker, Taylor Kibby, Larry Rew, Alicia Vela-Bailey, Debra Wilson, Sigourney Weaver, Woody Schultz, Kevin Dorman, Julie Lamm",
+                    "director": "James Cameron",
+                    "director_of_photography": "Mauro Fiore",
+                    "writers": "James Cameron",
+                    "producers": "Colin Wilson, Laeta Kalogridis, James Cameron, Jon Landau",
+                    "music_composer": "James Horner",
+                    "imdb_rating": "7.9",
+                    "imdb_votes": "1447474",
+                    "poster_path": "/gKY6q7SjCkAU6FqvqWybDYgUKIF.jpg"
+                }
+            ]
+        };
+
+        // Select the first movie object for display
+        const movie = rawJsonData.data[0];
+
+        // --- Utility Functions ---
+
+        /**
+         * Converts an Excel serial date number to a formatted date string.
+         * Assumes the Excel date system (days since Jan 1, 1900).
+         * @param {string} serial - The Excel serial date as a string.
+         * @returns {string} The formatted date string (e.g., "December 18, 2009").
+         */
+        function excelSerialToDate(serial) {
+            const serialNum = parseInt(serial);
+            if (isNaN(serialNum)) return 'N/A';
+            
+            // Excel's 1900 date system epoch: January 1, 1900.
+            // JavaScript's epoch: January 1, 1970.
+            // Offset for 1900 system to 1970 system is 25569 days.
+            // 86400000ms = 24 hours * 60 min * 60 sec * 1000 ms
+            const MS_PER_DAY = 86400000;
+            const date = new Date((serialNum - 25569) * MS_PER_DAY);
+
+            // Check if the date is valid and format it
+            if (isNaN(date.getTime())) {
+                return 'N/A';
+            }
+
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        /**
+         * Formats a large number into a currency string (e.g., $2.92 Billion).
+         * @param {string} amount - The number string (revenue/budget).
+         * @returns {string} The formatted currency string.
+         */
+        function formatCurrency(amount) {
+            const num = parseInt(amount);
+            if (isNaN(num)) return 'N/A';
+
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            }).format(num);
+        }
+
+        /**
+         * Converts runtime in minutes to H:MM format.
+         * @param {string} minutes - The runtime in minutes as a string.
+         * @returns {string} The formatted runtime (e.g., "2h 42m").
+         */
+        function formatRuntime(minutes) {
+            const min = parseInt(minutes);
+            if (isNaN(min)) return 'N/A';
+            const hours = Math.floor(min / 60);
+            const remainingMinutes = min % 60;
+            return `${hours}h ${remainingMinutes}m`;
+        }
+        
+        /**
+         * Limits a comma-separated list string to the first N items.
+         * @param {string} listString - The comma-separated string.
+         * @param {number} limit - The maximum number of items to show.
+         * @returns {string} The limited and formatted list string.
+         */
+        function limitList(listString, limit) {
+            if (!listString) return 'N/A';
+            return listString.split(',').map(s => s.trim()).slice(0, limit).join(', ');
+        }
+
+
+        // --- HTML Generation Function ---
+
+        /**
+         * Generates the complete HTML content for the movie details page.
+         * @param {object} m - The processed movie data object.
+         * @returns {string} The HTML string.
+         */
+        function generateMovieHtml(m) {
+            const releaseDateFormatted = excelSerialToDate(m.release_date);
+            const revenueFormatted = formatCurrency(m.revenue);
+            const budgetFormatted = formatCurrency(m.budget);
+            const runtimeFormatted = formatRuntime(m.runtime);
+            const mainCast = limitList(m.cast, 6); // Limit cast to first 6 names
+            const genres = m.genres.split(',').map(g => g.trim());
+
+            // Placeholder image URL
+            const posterUrl = `https://placehold.co/300x450/1C2134/E5E7EB?text=${encodeURIComponent(m.title)}\n(${m.year})`;
+            
+            // Hero Banner Section
+            const heroBanner = `
+                <div class="relative bg-secondary overflow-hidden h-[450px] md:h-[550px] bg-hero-pattern bg-cover bg-center shadow-2xl">
+                    <div class="absolute inset-0 bg-primary bg-opacity-70 backdrop-blur-sm"></div>
+                    
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 flex items-center h-full">
+                        
+                        <!-- Poster and Main Info (Mobile: Stacks, Desktop: Side-by-Side) -->
+                        <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-10 w-full">
+                            
+                            <!-- Poster -->
+                            <img 
+                                src="${posterUrl}" 
+                                alt="${m.title} Poster" 
+                                class="w-40 h-60 sm:w-56 sm:h-84 rounded-xl shadow-xl object-cover flex-shrink-0 mx-auto md:mx-0 border-4 border-accent/50"
+                                onerror="this.onerror=null;this.src='https://placehold.co/300x450/1C2134/E5E7EB?text=Poster+Unavailable';"
+                            >
+
+                            <!-- Text Content -->
+                            <div class="text-center md:text-left">
+                                <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight text-text-light drop-shadow-lg">
+                                    ${m.title}
+                                </h1>
+                                <p class="mt-2 text-xl italic font-medium text-text-light/80 drop-shadow">${m.tagline}</p>
+                                
+                                <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-2 text-sm">
+                                    ${genres.map(genre => 
+                                        `<span class="px-3 py-1 bg-accent/20 text-accent font-semibold rounded-full">${genre}</span>`
+                                    ).join('')}
+                                </div>
+
+                                <div class="mt-6 flex flex-wrap justify-center md:justify-start items-center space-x-4 text-text-light">
+                                    <div class="flex items-center space-x-1">
+                                        <!-- Star Icon (Lucide-react equivalent: star) -->
+                                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.071 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.031a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.031a1 1 0 00-1.175 0l-2.8 2.031c-.785.57-1.84-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.031c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" /></svg>
+                                        <span class="text-lg font-bold">${parseFloat(m.imdb_rating).toFixed(1)}</span>
+                                        <span class="text-sm text-text-muted">/ 10</span>
+                                    </div>
+                                    <span class="text-text-muted">•</span>
+                                    <span class="text-sm">${runtimeFormatted}</span>
+                                    <span class="text-text-muted">•</span>
+                                    <span class="text-sm">${releaseDateFormatted.split(' ').pop()} (${m.status})</span>
+                                </div>
+
+                                <p class="mt-4 text-base font-semibold text-text-light">
+                                    Director: <span class="text-accent/80">${m.director}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Main Details and Synopsis Section
+            const mainContent = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+                    
+                    <!-- Overview Section -->
+                    <div class="bg-secondary p-6 md:p-8 rounded-xl shadow-lg">
+                        <h2 class="section-title text-2xl font-bold text-text-light">Overview</h2>
+                        <p class="mt-4 text-text-muted leading-relaxed">${m.overview}</p>
+                    </div>
+
+                    <!-- Key Metrics Section (Grid Layout) -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                        
+                        <div class="bg-secondary p-5 rounded-xl shadow-md text-center">
+                            <p class="text-text-muted text-sm">Votes</p>
+                            <p class="text-text-light text-xl font-bold mt-1">${parseInt(m.vote_count).toLocaleString()} (${m.imdb_votes})</p>
+                        </div>
+                        
+                        <div class="bg-secondary p-5 rounded-xl shadow-md text-center">
+                            <p class="text-text-muted text-sm">Budget</p>
+                            <p class="text-text-light text-xl font-bold mt-1">${budgetFormatted}</p>
+                        </div>
+                        
+                        <div class="bg-secondary p-5 rounded-xl shadow-md text-center">
+                            <p class="text-text-muted text-sm">Revenue</p>
+                            <p class="text-text-light text-xl font-bold mt-1">${revenueFormatted}</p>
+                        </div>
+                        
+                        <div class="bg-secondary p-5 rounded-xl shadow-md text-center">
+                            <p class="text-text-muted text-sm">Language</p>
+                            <p class="text-text-light text-xl font-bold mt-1">${m.original_language.toUpperCase()}</p>
+                        </div>
+                    </div>
+
+                    <!-- Cast & Crew Section (Two Columns on Desktop) -->
+                    <div class="bg-secondary p-6 md:p-8 rounded-xl shadow-lg">
+                        <h2 class="section-title text-2xl font-bold text-text-light">Cast & Crew</h2>
+                        
+                        <div class="mt-4 grid md:grid-cols-2 gap-8 text-text-light">
+                            
+                            <!-- Cast Column -->
+                            <div>
+                                <h3 class="text-xl font-semibold mb-3 text-accent">Top Cast</h3>
+                                <p class="text-text-muted">${mainCast}</p>
+                            </div>
+
+                            <!-- Crew Column -->
+                            <div>
+                                <h3 class="text-xl font-semibold mb-3 text-accent">Key Crew</h3>
+                                <dl class="space-y-2 text-text-muted">
+                                    <div class="flex">
+                                        <dt class="w-1/3 font-medium text-text-light">Director</dt>
+                                        <dd class="w-2/3">${m.director}</dd>
+                                    </div>
+                                    <div class="flex">
+                                        <dt class="w-1/3 font-medium text-text-light">Writers</dt>
+                                        <dd class="w-2/3">${limitList(m.writers, 2)}</dd>
+                                    </div>
+                                    <div class="flex">
+                                        <dt class="w-1/3 font-medium text-text-light">Producers</dt>
+                                        <dd class="w-2/3">${limitList(m.producers, 3)}</dd>
+                                    </div>
+                                    <div class="flex">
+                                        <dt class="w-1/3 font-medium text-text-light">DOP</dt>
+                                        <dd class="w-2/3">${m.director_of_photography}</dd>
+                                    </div>
+                                    <div class="flex">
+                                        <dt class="w-1/3 font-medium text-text-light">Composer</dt>
+                                        <dd class="w-2/3">${m.music_composer}</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Production Info -->
+                    <div class="bg-secondary p-6 md:p-8 rounded-xl shadow-lg">
+                        <h2 class="section-title text-2xl font-bold text-text-light">Production Details</h2>
+                        <dl class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-text-muted">
+                            
+                            <div class="flex">
+                                <dt class="w-2/5 font-medium text-text-light">Original Title</dt>
+                                <dd class="w-3/5">${m.original_title}</dd>
+                            </div>
+                            <div class="flex">
+                                <dt class="w-2/5 font-medium text-text-light">Release Date</dt>
+                                <dd class="w-3/5">${releaseDateFormatted}</dd>
+                            </div>
+                            <div class="flex">
+                                <dt class="w-2/5 font-medium text-text-light">Production Co.</dt>
+                                <dd class="w-3/5">${limitList(m.production_companies, 2)}</dd>
+                            </div>
+                            <div class="flex">
+                                <dt class="w-2/5 font-medium text-text-light">Countries</dt>
+                                <dd class="w-3/5">${m.production_countries}</dd>
+                            </div>
+                            <div class="flex">
+                                <dt class="w-2/5 font-medium text-text-light">Spoken Languages</dt>
+                                <dd class="w-3/5">${m.spoken_languages}</dd>
+                            </div>
+                            <div class="flex">
+                                <dt class="w-2/5 font-medium text-text-light">IMDb ID</dt>
+                                <dd class="w-3/5">
+                                    <a href="https://www.imdb.com/title/${m.imdb_id}/" target="_blank" class="text-accent hover:text-accent/80 transition">${m.imdb_id}</a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                </div>
+            `;
+
+            return heroBanner + mainContent;
+        }
+
+        // --- Main Execution Block ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('movie-details-container');
+
+            if (!movie) {
+                container.innerHTML = `<div class="p-8 text-center text-red-400 text-lg">Error: No movie data found in the JSON array.</div>`;
+                return;
+            }
+
+            // Generate the dynamic HTML
+            const movieHtml = generateMovieHtml(movie);
+
+            // Dynamically insert the generated HTML into the container
+            container.innerHTML = movieHtml;
+        });
+
+    </script>
+</body>
+</html>
