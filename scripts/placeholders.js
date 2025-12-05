@@ -47,3 +47,30 @@ export async function fetchPlaceholders(prefix = 'default') {
   }
   return window.placeholders[`${prefix}`];
 }
+
+// Check if the current URL ends with /home
+if (window.location.pathname.endsWith("/home")) {
+  // Apply global styles dynamically
+  const style = document.createElement("style");
+  style.innerHTML = `
+   :root {
+            --primary: #0D0E1F;
+            --secondary: #1A2033;
+            --accent: #4F46E5; /* Indigo */
+            --text-light: #E5E7EB;
+            --text-muted: #9CA3AF;
+            --max-width: 1280px;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-dark: 0 10px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+        }
+  `;
+  document.head.appendChild(style);
+}
