@@ -1,0 +1,333 @@
+       /* --- 1. CSS Variables and Base Styles --- */
+        :root {
+            --primary: #0D0E1F;
+            --secondary: #1A2033;
+            --accent: #4F46E5; /* Indigo */
+            --text-light: #E5E7EB;
+            --text-muted: #9CA3AF;
+            --max-width: 1280px;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-dark: 0 10px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+        }
+
+        .movie-details
+        {
+          color: var(--text-light);
+        }
+
+        /* --- 2. Utility Classes --- */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1rem; /* Equivalent to px-4 */
+        }
+        
+        .p-section {
+            padding-top: 3rem; /* Equivalent to py-12 */
+            padding-bottom: 3rem;
+        }
+        
+        .movie-details .card {
+            background-color: var(--secondary);
+            padding: 1.5rem; /* Equivalent to p-6 */
+            border-radius: 0.75rem; /* Equivalent to rounded-xl */
+            box-shadow: var(--shadow-light);
+            margin-bottom: 2rem;
+        }
+
+        /* Section title with accent underline */
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem; /* Equivalent to text-2xl */
+            font-weight: bold;
+            color: var(--text-light);
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 9999px;
+        }
+
+        /* --- 3. Hero Banner Specific Styles --- */
+        .movie-details .hero-banner {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background-color: var(--secondary);
+            /* background-image: url('https://placehold.co/1200x500/101222/FFF?text=Sci-Fi+Hero+Banner+Placeholder'); */
+            /* background-image: url('https://placehold.co/1200x500/101222/FFF?text=Sci-Fi+Hero+Banner+Placeholder');  */
+            background-size: cover;
+            background-position: center;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .movie-details .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: var(--primary);
+            opacity: 0.7;
+            /* Added blur for visual effect */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        .movie-details .hero-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            /* padding-top: 2rem; */
+            padding-bottom: 3rem;
+        }
+        
+        .movie-details .movie-poster {
+            width: 260px; /* w-40 */
+            height: 380px; /* h-60 */
+                margin-left: 10%;
+    margin-right: 10%;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-light);
+            object-fit: cover;
+            flex-shrink: 0;
+            margin: 0 auto; /* Center on mobile */
+            border: 4px solid rgba(79, 70, 229, 0.5); /* accent/50 */
+        }
+        
+        .movie-details .movie-info {
+            text-align: left;
+            margin-left: 10%;
+            /* margin-top: 1.5rem; */
+            width: 100%;
+        }
+        
+        .movie-details .movie-title {
+            font-size: 3.25rem; /* text-4xl */
+            font-weight: 800;
+            line-height: 1.25;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+
+        .movie-details .movie-tagline {
+            margin-top: 0.5rem;
+            font-size: 1.25rem; /* text-xl */
+            font-style: italic;
+            font-weight: 500;
+            color: rgba(229, 231, 235, 0.8); /* text-light/80 */
+        }
+
+        .movie-details .genre-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        .movie-details .genre-item {
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            background-color: rgba(79, 70, 229, 0.2); /* accent/20 */
+            color: var(--accent);
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+
+        .meta-data {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* --- 4. Main Content Layouts --- */
+        .grid-4-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+            gap: 1rem;
+        }
+
+        .metric-box {
+            background-color: var(--secondary);
+            padding: 1.25rem; /* p-5 */
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+        }
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        .metric-value {
+            color: var(--text-light);
+            font-size: 1.25rem; /* text-xl */
+            font-weight: bold;
+            margin-top: 0.25rem;
+        }
+        
+        .crew-grid {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 2rem;
+            color: var(--text-light);
+        }
+        
+        .crew-label {
+            width: 33.333%; /* w-1/3 */
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        .crew-value {
+            width: 66.666%; /* w-2/3 */
+            color: var(--text-muted);
+        }
+        .crew-row {
+            display: flex;
+        }
+
+        .production-grid {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .production-row {
+            display: flex;
+        }
+        .production-label {
+            width: 40%; /* w-2/5 */
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        .production-value {
+            width: 60%; /* w-3/5 */
+        }
+        .production-value a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .production-value a:hover {
+            color: rgba(79, 70, 229, 0.8);
+        }
+
+        /* --- 5. Media Queries for Desktop/Tablet (md breakpoint) --- */
+        @media (min-width: 768px) {
+            
+            .hero-banner {
+                height: 550px;
+            }
+
+            .hero-content {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+            
+            .movie-poster {
+                width: 224px; /* sm:w-56 */
+                height: 336px; /* sm:h-84 */
+                margin: 0; /* Remove auto centering */
+                margin-right: 2.5rem; /* space-x-10 */
+            }
+            
+            .movie-info {
+                text-align: left;
+                margin-top: 0;
+            }
+
+            .movie-title {
+                font-size: 3rem; /* text-5xl */
+            }
+            
+            .genre-list {
+                justify-content: flex-start;
+            }
+
+            .meta-data {
+                justify-content: flex-start;
+            }
+            
+            .grid-4-col {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
+                gap: 2rem;
+            }
+            
+            .crew-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on desktop */
+                gap: 2rem;
+            }
+
+            .production-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on desktop */
+                gap: 3rem;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 1.5rem; /* Equivalent to sm:px-6 */
+            }
+        }
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem; /* Equivalent to lg:px-8 */
+            }
+        }
+
+        footer{
+          background-color: transparent !important;
+          color: white;
+        }
+
+
+
+        .cast-container {
+  display: flex;
+  flex-wrap: wrap;       /* allow badges to wrap to next line */
+  gap: 8px;              /* spacing between badges */
+  margin: 20px;
+}
+
+.badge {
+  /* background-color: #333; dark background */
+  background-color: #555; /* hover effect */
+  color: #fff;            /* white text */
+  padding: 6px 12px;
+  border-radius: 12px;    /* rounded pill shape */
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-block;
+  transition: background 0.3s;
+  margin: 5px 5px;
+}
+
+.badge:hover {
+  background-color: #555; /* hover effect */
+}
