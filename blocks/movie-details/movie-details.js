@@ -269,6 +269,9 @@ async function getMatchingMovieData(url,targetId,block){
                                 <p style="margin-top: 1rem; font-size: 1rem; font-weight: 600;">
                                     Director: <span style="color: rgba(79, 70, 229, 0.8);">${m.director}</span>
                                 </p>
+                                <button class="play-movie-button" onclick="window.open('https://www.imdb.com/title/${m.imdb_id}/', '_blank')">
+                                    Play Trailer
+                                </button>
                             </div>
                         </div>
                     </div>
